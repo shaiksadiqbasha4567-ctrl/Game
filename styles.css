@@ -1,92 +1,152 @@
-*{
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
 
-/* Center everything on the page */
-body {
+/* --- Global Resets & Anti-Aliasing --- */
+* {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-}
-h1{
-    background-color: #091b31;
-    color: #fff;
-    height: 5rem;
-    line-height: 5rem;
+  box-sizing: border-box;
+  text-align: center;
+  /* Removes tap highlight frame on mobile WebKit browsers */
+  -webkit-tap-highlight-color: transparent; 
 }
 
+body {
+  font-family: Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+  min-height: 100vh;
+  /* Prevents unwanted horizontal scrolling on small screens */
+  overflow-x: hidden; 
+}
 
+/* --- Header --- */
+h1 {
+  background-color: #091b31;
+  color: #fff;
+  height: 4rem;
+  line-height: 4rem;
+  font-size: clamp(1.4rem, 5vw, 2.2rem);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
 
-.choice:hover{
+/* --- Choice Buttons Section --- */
+.choices {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 5vw, 3rem); /* Dynamically shrinks gap on narrow screens */
+  margin-top: 3rem;
+  padding: 0 1rem;
+}
+
+.choice {
+  /* Fluid sizing: Scales smoothly between 68px and 100px */
+  width: clamp(68px, 20vw, 100px);
+  height: clamp(68px, 20vw, 100px);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  touch-action: manipulation; /* Removes 300ms double-tap zoom delay on mobile */
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+/* Hover state (Mouse devices) */
+@media (hover: hover) {
+  .choice:hover {
     cursor: pointer;
-    transform: translateY(-8px) scale(1.05);
-    box-shadow : 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
 }
 
-.choice{
-    height: 165px;
-    width: 165px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition : transform 0.2s ease, box-shadow 0.2s ease;
+/* Active / Tap Feedback (Mobile + Desktop) */
+.choice:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-img{
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 50%;    
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none; /* Keeps touch drag from triggering on images */
 }
 
-.choices{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 3rem;
-    margin-top: 5rem;
+/* --- Scoreboard --- */
+.score-board {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+  gap: clamp(2rem, 8vw, 5rem);
+  padding: 0 1rem;
 }
 
-.score-board{
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2rem;
-    gap: 5rem;
+#user-score,
+#computer-score {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: bold;
+  color: #091b31;
+  line-height: 1.1;
 }
 
-#user-score,#computer-score{
-    font-size: 4rem;
+/* --- Message Container --- */
+.msg-container {
+  margin-top: 2.5rem;
+  padding: 0 1rem;
 }
 
-.msg-container{
-    margin-top: 2rem;
+#msg {
+  background-color: #081b31;
+  color: #fff;
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  display: inline-block;
+  border-radius: 2rem;
+  padding: 0.8rem 1.8rem;
+  max-width: 90%;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#msg{    
-    background-color: #081b31;
-    color: #fff;
-    height: 5rem;
-    font-size: 2rem;
-    display: inline;
-    border-radius: 1rem;
-    padding: 1rem;
+#round-info {
+  margin-top: 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: #555;
+  padding: 0 1rem;
 }
 
-#round-info{
-    margin-top: 2rem;
-    justify-content: center;
-    text-align: center;
-    font-size: 2rem;
+/* --- Reset Button --- */
+#reset-btn {
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  font-weight: bold;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
 }
 
-#reset-btn{
-    margin-top: 2rem;
-    border-radius: 1rem;
-    font-size: 2rem;
-    background-color: gray;
+@media (hover: hover) {
+  #reset-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(231, 76, 60, 0.4);
+  }
 }
+
+#reset-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 5px rgba(231, 76, 60, 0.3);
+}
+
+/* --- HTML Viewport Check Notice --- */
+/* Make sure your HTML file has this line inside <head>: */
+/* <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
