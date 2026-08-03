@@ -7,11 +7,27 @@ const choices = document.querySelectorAll('.choice');
 const msg = document.querySelector('#msg');
 const userScorePara = document.querySelector('#user-score');
 const computerScorePara = document.querySelector('#computer-score');
-
+const btn= document.getElementById("Btn");
 // New DOM elements
 const roundInfo = document.querySelector('#round-info'); 
 const resetBtn = document.querySelector('#reset-btn');
+const winSound = new Audio('win.mp3.wav');
+const loseSound = new Audio('lose.mp3.wav');
 
+const playSound =(sound)=>{
+   sound.currentTime = 0;
+   sound.play().catch(err=>(console.log('Audio blocked by the browser',err)));
+};
+
+
+btn.addEventListener("click",()=>{
+   document.body.classList.toggle('dark');
+   if(document.body.classList.contains("dark")){
+    btn.textContent ="🔆Light Mode";
+   }else{
+    btn.textContent ="🌙Dark Mode";
+   }
+})
 const gameDraw = () => {
   msg.innerText = "Game Draw. Play Again!";
   msg.style.backgroundColor = "blue";
@@ -51,9 +67,12 @@ const endGame = () => {
   if (userScore > computerScore) {
     msg.innerText = `Game Over! You won the series ${userScore}-${computerScore}! 🏆`;
     msg.style.backgroundColor = "purple";
+     playSound(winSound);
+     
   } else if (computerScore > userScore) {
     msg.innerText = `Game Over! Computer won the series ${computerScore}-${userScore}. 🤖`;
     msg.style.backgroundColor = "orange";
+    playSound(loseSound); 
   } else {
     msg.innerText = `Game Over! It's a tie series ${userScore}-${computerScore}!`;
     msg.style.backgroundColor = "gray";
